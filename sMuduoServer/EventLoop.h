@@ -44,7 +44,8 @@ public:
     //唤醒loop后的错误处理回调
     void HandleError();
 
-    void AddFunctor(Functor functor){
+    void AddFunctor(Functor functor)
+    {
         {
             std::lock_guard<std::mutex> lock(mutex_);
             pendingFunctors_.push_back(functor);
