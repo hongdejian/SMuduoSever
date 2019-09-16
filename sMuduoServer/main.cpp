@@ -1,0 +1,35 @@
+#include<signal.h>
+#include"EventLoop.h"
+#include"EchoServer.h"
+
+EventLoop* lp;
+static void sighandler1(int sig_no){
+    exit(0);
+}
+static void sighandler2(int sig_no){
+    lp->quit();
+}
+int main(int argc,char* argv[]){
+    signal(SIGUSR1,sighandler1);
+    signal(SIGUSR2,sighandler2);
+    signal(SIGINT, sighandler2);
+    signal(SIGPIPE, SIG_IGN);  //SIG_IGN,系统函数，忽略信号的处理程序,客户端发送RST包后，服务器还调用write会触发
+
+    int port = 80;
+    int iothreadnum = 4;
+    int workerthreadnum = 4;
+    if(argc == 4)
+    {
+        port = atoi(argv[1]);
+        iothreadnum = atoi(argv[2]);
+        workerthreadnum = atoi(argv[3]);
+    }   
+
+
+    EventLoop loop;
+    lp = &loop;
+    EchoServer echoserver(&loop, port, iothreadnum);
+    echoserver.start();
+    loop.loop();
+    return 0;
+}
