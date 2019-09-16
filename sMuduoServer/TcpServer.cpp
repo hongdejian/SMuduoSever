@@ -37,7 +37,7 @@ void TcpServer::start()
 {
     eventloopthreadpool_.start();
     serverchannel_.setEvents(EPOLLIN|EPOLLET);
-    loop_->UpdateChannelInPoller(&serverchannel_);
+    loop_->AddChannelToPoller(&serverchannel_);
 }
 
 //新TCP连接处理，核心功能，业务功能注册，任务分发

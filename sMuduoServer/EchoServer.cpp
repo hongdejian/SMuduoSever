@@ -14,9 +14,9 @@ EchoServer::EchoServer(EventLoop* loop,const int port,const int threadnum)
     //注册数据发送完成回调函数
     tcpserver_.SetSendCompleteCallback(std::bind(&EchoServer::HanleSendComplete,this,std::placeholders::_1));
     //注册连接关闭回调函数
-    tcpserver_.SetCloseCallback(std::bind(EchoServer::HandleClose,this,std::placeholders::_1));
+    tcpserver_.SetCloseCallback(std::bind(&EchoServer::HandleClose,this,std::placeholders::_1));
     //注册连接异常回调函数  
-    tcpserver_.SetErrorCallback(std::bind(EchoServer::HandleError,this,std::placeholders::_1));
+    tcpserver_.SetErrorCallback(std::bind(&EchoServer::HandleError,this,std::placeholders::_1));
 }
 EchoServer::~EchoServer()
 {

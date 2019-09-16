@@ -33,6 +33,13 @@ TcpConnection::TcpConnection(EventLoop* loop,int fd,const struct sockaddr_in &cl
     spchannel_->setErrorEventCallback(std::bind(&TcpConnection::HandleError,this));
 }
 
+TcpConnection::~TcpConnection()
+{
+	//多线程下，加入loop的任务队列？不用，因为已经在当前loop线程
+	//移除事件,析构成员变量
+	loop_->RemoveChannelFromPoller(spchannel_.get());
+	close(fd_);
+}
 void TcpConnection::AddChannelToloop()
 {
     //bug segement fault 
