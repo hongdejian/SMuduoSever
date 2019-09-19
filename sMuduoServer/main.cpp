@@ -1,6 +1,7 @@
 #include<signal.h>
 #include"EventLoop.h"
 #include"EchoServer.h"
+#include"HttpServer.h"
 
 EventLoop* lp;
 static void sighandler1(int sig_no){
@@ -25,11 +26,22 @@ int main(int argc,char* argv[]){
         workerthreadnum = atoi(argv[3]);
     }   
 
-
     EventLoop loop;
-    lp = &loop;
-    EchoServer echoserver(&loop, port, iothreadnum);
-    echoserver.start();
-    loop.loop();
+    lp=&loop;
+    HttpServer httpserver(&loop,port,iothreadnum,workerthreadnum);
+    httpserver.start();
+
+    try
+    {
+        loop.loop();
+    }
+    catch(std::bad_alloc&ba){
+        std::cerr<<"bad_alloc caught in main:main loop"<<ba.what()<<'\n';
+    }
+    //EventLoop loop;
+    //lp = &loop;
+    //EchoServer echoserver(&loop, port, iothreadnum);
+    //echoserver.start();
+    //loop.loop();
     return 0;
 }

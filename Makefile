@@ -9,7 +9,7 @@ OBJ = $(patsubst %.cpp,$(DIR_OBJ)/%.o,$(notdir $(SRC)))
 CXX_FLAG = -g -Wall -std=c++11 -pthread -O3
 CC = g++
 
-TARGET = echoserver
+TARGET = smuduoserver
 
 $(DIR_BIN)/$(TARGET) : $(OBJ)
 	$(CC) $(CXX_FLAG) -o $@ $^
