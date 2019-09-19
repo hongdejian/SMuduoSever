@@ -1,6 +1,6 @@
 # SMuduoSever
 
-参照muduo网络库和github上其他一些开源大佬(也是muduo思想)，最后自己动手实现了这个smuduoSever。
+参照muduo网络库和github上其他一些开源大佬(也是muduo思想)，最后自己动手实现了这个smuduoSever,之后会一直改进，增加一些其他的功能或特性。
 
 **使用muduo思想，但是比muduo简洁明了**。没有muduo的那些base库,全部使用c++11的东西。
 
