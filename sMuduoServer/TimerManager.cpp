@@ -143,7 +143,7 @@ void TimerManager::checkTimer(){//执行当前slot的任务
             if(ptimer->timertype_==Timer::TimerType::TIMER_ONCE){
                 Timer* ptemptimer=ptimer;
                 ptimer=ptimer->next;
-                removeTimerFromTimerWheel(ptimer);
+                removeTimerFromTimerWheel(ptemptimer);
             }
             else{
                 Timer* ptemptimer=ptimer;
@@ -163,7 +163,7 @@ void TimerManager::checkTimer(){//执行当前slot的任务
 
 void TimerManager::checkTick()
 {
-    int si=TimerManager::slotinterval;
+    //int si=TimerManager::slotinterval;
     struct timeval tv;
     gettimeofday(&tv,nullptr);
     int oldtime=(tv.tv_sec%10000)*1000+tv.tv_usec/1000;

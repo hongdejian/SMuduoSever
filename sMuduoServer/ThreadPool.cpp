@@ -63,6 +63,7 @@ void ThreadPool::ThreadFunc()
 
     Task task;
     while(started_){
+        //std::cout<<"ThreadPool started."<<std::endl;
         task=nullptr;
         {
             std::unique_lock<std::mutex> lock(mutex_);//unique_lock支持解锁又上锁情况
@@ -73,25 +74,29 @@ void ThreadPool::ThreadFunc()
             if(!started_){
                 break;
             }
-            //std::cout<<"wake up "<<tid<<std::endl;
-            //std::cout<<"size :"<<taskQueue_.size()<<std::endl;
+            std::cout<<"wake up "<<tid<<std::endl;
+            std::cout<<"size :"<<taskQueue_.size()<<std::endl;
             task=taskQueue_.front();
             taskQueue_.pop();
         }
-    }
-    if(task){
+        //FixMe::task must in while(stated_)!@!!
+        if(task!=nullptr){
 
-        try
-        {
-            task();
+            
+            try
+            {
+                task();
+                std::cout<<"task over"<<std::endl;
+            }
+            catch(const std::bad_alloc& e)
+            {
+                std::cerr <<"bad_alloc caught in ThreadPool:: ThreadFunc task :"<< e.what() << '\n';
+                exit(1);
+            }
+            //task();//task中的IO过程可以使用协程优化，让出CPU
         }
-        catch(const std::bad_alloc& e)
-        {
-            std::cerr <<"bad_alloc caught in ThreadPool:: ThreadFunc task :"<< e.what() << '\n';
-            exit(1);
-        }
-        //task();//task中的IO过程可以使用协程优化，让出CPU
     }
+    
 }
 
 // 测试

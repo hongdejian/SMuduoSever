@@ -68,6 +68,7 @@ void HttpServer::HandleMessage(const spTcpConnection &sptcpconn, std::string &ms
             std::string responsemsg;
             sphttpsession->HttpProcess(httprequestcontext,responsemsg);
             std::cout<<" httpProcess complished"<<std::endl;
+            
             sptcpconn->Send(responsemsg); //任务已经处理完成，执行跨线程调度，即回调
 
             if(!sphttpsession->KeepAlive())
