@@ -8,7 +8,7 @@
 
 ## 技术点
 
-- 采用基于epoll的IO多路复用机制，+非阻塞IO+IO多路复用+边缘触发  基于事件驱动Reactor模式
+- 采用基于epoll的IO多路复用机制，非阻塞IO+IO多路复用+边缘触发  基于事件驱动Reactor模式
 
 - 由于采用ET模式，read、write和accept的时候必须采用循环的方式，直到error==EAGAIN为止，防止漏读等清况，这样的效率会比LT模式高很多，减少了触发次数
 
